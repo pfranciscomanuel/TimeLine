@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Linea del tiempo</title>
+  <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .timeline {
+      display: flex;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      flex-direction: column;
+      max-width: 700px;
+      position: relative;
+    }
+
+    .timeline__content-title {
+      font-weight: normal;
+      font-size: 66px;
+      margin: -10px 0 0 0;
+      transition: 0.4s;
+      padding: 0 10px;
+      box-sizing: border-box;
+      font-family: 'Oswald', sans-serif;
+      color: #d4a024;
+    }
+
+    .timeline__content-desc {
+      margin: 0;
+      font-size: 15px;
+      box-sizing: border-box;
+      color: #dba015ef;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: normal;
+      line-height: 25px;
+    }
+
+    .timeline:before {
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      margin-left: -1px;
+      content: "";
+      background: rgba(255, 255, 255, .07);
+    }
+
+    @media only screen and (max-width: 767px) {
+      .timeline:before {
+        left: 40px;
+      }
+    }
+
+    .timeline-item {
+      padding: 40px 0;
+      opacity: 0.3;
+      filter: blur(2px);
+      transition: 0.5s;
+      box-sizing: border-box;
+      width: calc(50% - 40px);
+      display: flex;
+      position: relative;
+      transform: translateY(-80px);
+      font-weight: 700;
+    }
+
+    .timeline-item:before {
+      content: attr(data-text);
+      letter-spacing: 3px;
+      width: 100%;
+      position: absolute;
+      color: #d4a024;
+      font-size: 15px;
+      font-family: 'Pathway Gothic One', sans-serif;
+      border-left: 2px solid #d4a024;
+      top: 70%;
+      margin-top: -5px;
+      padding-left: 15px;
+      opacity: 0;
+      right: calc(-100% - 56px);
+
+    }
+
+    .timeline-item:nth-child(even) {
+      align-self: flex-end;
+    }
+
+    .timeline-item:nth-child(even):before {
+      right: auto;
+      text-align: right;
+      left: calc(-100% - 56px);
+      padding-left: 0;
+      border-left: none;
+      border-right: 2px solid #d4a024;
+      padding-right: 15px;
+    }
+
+    .timeline-item--active {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+
+    .timeline-item--active:before {
+      top: 50%;
+      transition: 0.3s all 0.2s;
+      opacity: 1;
+    }
+
+    .timeline-item--active .timeline__content-title {
+      margin: -50px 0 20px 0;
+    }
+
+    @media only screen and (max-width: 767px) {
+      .timeline-item {
+        align-self: baseline !important;
+        width: 100%;
+        padding: 0 30px 150px 80px;
+      }
+
+      .timeline-item:before {
+        left: 10px !important;
+        padding: 0 !important;
+        top: 50px;
+        text-align: center !important;
+        width: 60px;
+        border: none !important;
+      }
+
+      .timeline-item:last-child {
+        padding-bottom: 40px;
+      }
+    }
+
+    .timeline__img {
+      max-width: 100%;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, .4);
+    }
+
+    .timeline-container {
+      width: 100%;
+      position: relative;
+      padding: 80px 0;
+      transition: 0.3s ease 0s;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    .timeline-container:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      content: "";
+    }
+
+    .timeline-header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 80px;
+      position: relative;
+    }
+
+    .timeline-header__title {
+      color: #355afd;
+      font-size: 58px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    .timeline-header__subtitle {
+      color: rgba(255, 255, 255, .5);
+      font-family: 'Pathway Gothic One', sans-serif;
+      font-size: 16px;
+      letter-spacing: 5px;
+      margin: 10px 0 0 0;
+      font-weight: normal;
+    }
+
+    .demo-footer {
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .demo-footer a {
+      color: #999;
+      display: inline-block;
+      font-family: Cardo;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="timeline-container" id="timeline-1">
+    <div class="timeline-header">
+      <h2 class="timeline-header__title">INTERACCI&Oacute;N HUMANO COMPUTADORA</h2>
+      <h3 class="timeline-header__subtitle">1940 - 1970</h3>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item" data-text="LA COMPUTADORA Z3">
+        <div class="timeline__content"><img class="timeline__img" src="image/1941_computadora.png" />
+          <h2 class="timeline__content-title">1941</h2>
+          <p class="timeline__content-desc">La computadora Z3 fue creada por Konrad Zuse. Fue la primera máquina
+            programable y completamente automática.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="LA ABC (Atanasoff Berry Computer).">
+        <div class="timeline__content"><img class="timeline__img" src="image/1942_Jonh.png" />
+          <h2 class="timeline__content-title">1942</h2>
+          <p class="timeline__content-desc">John Vincent Atanasoff y Clifford Edward Berry completaron una calculadora
+            de propósito especial para resolver sistemas de ecuaciones lineales simultáneas, la cual fue llamada la
+            "ABC" ("Atanasoff Berry Computer").</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="LOS ORDENADORES COLOSSUS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1944_Inglaterra.png" />
+          <h2 class="timeline__content-title">1944</h2>
+          <p class="timeline__content-desc">En Inglaterra se construyeron los ordenadores Colossus (Colossus Mark I y
+            Colossus Mark 2), con el objetivo de descifrar las comunicaciones de los alemanes durante la Segunda guerra
+            mundial.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="CREACI&Oacute;N MARK I">
+        <div class="timeline__content"><img class="timeline__img" src="image/1944_EU.jpg" />
+          <h2 class="timeline__content-title">1944</h2>
+          <p class="timeline__content-desc">En Estados Unidos se construyó, en la Universidad de Harvard, la Harvard
+            Mark I (primera máquina electromecánica), diseñada por un equipo encabezado por Howard H. Aiken.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MARK II">
+        <div class="timeline__content"><img class="timeline__img" src="image/1945_Primer.png" />
+          <h2 class="timeline__content-title">1945</h2>
+          <p class="timeline__content-desc">El primer caso de malfuncionamiento en la computadora causado por la
+            intrusión de una polilla al sistema fue documentado por los diseñadores del MARK II.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="FIRST DRAF OF A REPORT ON THE EDVAC">
+        <div class="timeline__content"><img class="timeline__img" src="image/1945_First_Draf.png" />
+          <h2 class="timeline__content-title">1945</h2>
+          <p class="timeline__content-desc">John von Neumann escribe el "First Draf of a report on the EDVAC" una página
+            del primer documento donde se describe el diseño lógico de una computadora utilizando el concepto de
+            programa almacenado</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="TEORÍA DE MEMEX">
+        <div class="timeline__content"><img class="timeline__img" src="image/1945_Sistema_Memex.png" />
+          <h2 class="timeline__content-title">1945</h2>
+          <p class="timeline__content-desc">Vannevar Bush desarrolló la teoría de Memex, un dispositivo de hipertexto
+            ligado a una librería de libros y películas.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="CREACI&Oacute;N DE LA ENIAC">
+        <div class="timeline__content"><img class="timeline__img" src="image/1946_ENIAC.png" />
+          <h2 class="timeline__content-title">1946</h2>
+          <p class="timeline__content-desc">En la Universidad de Pensilvania se construye la ENIAC (Electronic Numerical
+            Integrator And Calculator), que fue la primera computadora electrónica de propósito general.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="COMPUTADOR EDSAC (Electronic Dilay Storage)">
+        <div class="timeline__content"><img class="timeline__img" src="image/1946_EDSAC.png" />
+          <h2 class="timeline__content-title">1946</h2>
+          <p class="timeline__content-desc">Se pone un funcionamiento el computador británico EDSAC (Electronic Dilay
+            Storage) construida por Maurice Wilkes y un equipo perteneciente al laboratorio de matemáticas de la
+            universidad de Cambridge, fue inspirada en las ideas que Neumann expone en su borrador.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="EL PRIMER TRANSISTOR">
+        <div class="timeline__content"><img class="timeline__img" src="image/1947_Transistor.png" />
+          <h2 class="timeline__content-title">1947</h2>
+          <p class="timeline__content-desc">En Laboratorios Bell, John Bardeen, Walter H. Brattain y William Shockley
+            inventan el transistor.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="LA PRIMERA MEMORIA">
+        <div class="timeline__content"><img class="timeline__img" src="image/1949_primera.png" />
+          <h2 class="timeline__content-title">1949</h2>
+          <p class="timeline__content-desc">Jay Forrester desarrolla la primera memoria, la cual reemplazó los no
+            confiables tubos al vacío como la forma predominante de memoria por los próximos diez años.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PRIMER PROGRAMA">
+        <div class="timeline__content"><img class="timeline__img" src="image/1949_EDSAC.png" />
+          <h2 class="timeline__content-title">1949</h2>
+          <p class="timeline__content-desc">La computadora EDSAC corre su primer programa.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PRUEBA DE TURING">
+        <div class="timeline__content"><img class="timeline__img" src="image/1950_TURING.png" />
+          <h2 class="timeline__content-title">1950</h2>
+          <p class="timeline__content-desc">Alan Turing expone un artículo que describe lo que ahora conocemos como la
+            prueba de Turing. Su publicación explora el desarrollo natural y potencial de la inteligencia y comunicación
+            humana y de computadoras.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="GRUPOS DE USUARIOS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1950_SHARE.png" />
+          <h2 class="timeline__content-title">1950</h2>
+          <p class="timeline__content-desc">Se forman los primeros grupos de usuarios como SHARE (IBM) y DECUS (DEC), y
+            más tarde CSRG de Berkeley, donde el software se distribuye con su código fuente y sin restricciones.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="LENGUAJE BINARIO">
+        <div class="timeline__content"><img class="timeline__img" src="image/1951_EDVAC.png" />
+          <h2 class="timeline__content-title">1951</h2>
+          <p class="timeline__content-desc">Comienza a operar la EDVAC, a diferencia de la ENIAC, no era decimal, sino
+            binaria y tuvo el primer programa diseñado para ser almacenado.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PRIMER COMPUTADOR DE OFICINA">
+        <div class="timeline__content"><img class="timeline__img" src="image/1951 UNIVAC.jpg" />
+          <h2 class="timeline__content-title">1951</h2>
+          <p class="timeline__content-desc">Eckert y Mauchly entregan a la Oficina del Censo su primer computador: el
+            UNIVAC I.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="SISTEMA A-0">
+        <div class="timeline__content"><img class="timeline__img" src="image/1951_SISTEMA_A-0.png" />
+          <h2 class="timeline__content-title">1951</h2>
+          <p class="timeline__content-desc">el Sistema A-0 fue inventado por Grace Murray Hopper. Fue el compilador
+            desarrollado para una computadora electrónica.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="RATÓN EL&Eacute;CTRONICO">
+        <div class="timeline__content"><img class="timeline__img" src="image/1952_raton_electrico.png" />
+          <h2 class="timeline__content-title">1952</h2>
+          <p class="timeline__content-desc">Claude Elwood Shannon desarrolla el primer ratón eléctrico capaz de salir de
+            un laberinto, considerada la primera red neural.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MASIFICACI&Oacute;N DEL COMPUTADOR">
+        <div class="timeline__content"><img class="timeline__img" src="image/1953_ibm.jpg" />
+          <h2 class="timeline__content-title">1953</h2>
+          <p class="timeline__content-desc">IBM fabrica su primera computadora a escala industrial, la IBM 650. Se
+            amplía el uso del lenguaje ensamblador para la programación de las computadoras.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MEMORIA MAGN&Eacute;TICAS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1953_memorias.jpg" />
+          <h2 class="timeline__content-title">1953</h2>
+          <p class="timeline__content-desc">Se crean memorias a base de magnetismo (conocidas como memorias de núcleos
+            magnéticos).</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="CREACI&Oacute;N DE FORTRAN">
+        <div class="timeline__content"><img class="timeline__img" src="image/1954_fortran.jpg" />
+          <h2 class="timeline__content-title">1954</h2>
+          <p class="timeline__content-desc">Se desarrolla el lenguaje de programación de alto nivel Fortran</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="SEGUNDA GENERACIÓN DE COMPUTADORAS">
+        <div class="timeline__content"><img class="timeline__img" src="image/segundaG.webp" />
+          <h2 class="timeline__content-title">1954-1959</h2>
+          <p class="timeline__content-desc">HOla</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="SENSORAMA">
+        <div class="timeline__content"><img class="timeline__img" src="image/1957.png" />
+          <h2 class="timeline__content-title">1957</h2>
+          <p class="timeline__content-desc">Morton Heilig, apodado hoy por algunos como "El padre de la realidad
+            virtual".
+            Creó el Sensorama, que definía como "un aparato para estimular los sentidos de un individuo para simular
+            una experiencia de forma realista"..</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PRIMER JUEGO DE VIDEO">
+        <div class="timeline__content"><img class="timeline__img" src="image/1958.jfif" />
+          <h2 class="timeline__content-title">1958</h2>
+          <p class="timeline__content-desc">Creado por William Nighinbottham, usando un osciloscopio de laboratorio. Es
+            un
+            inicio de la curiosidad humana a las posibilidades de interacción con una computadora.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="DEC PDP-1">
+        <div class="timeline__content"><img class="timeline__img" src="image/1959.jpg" />
+          <h2 class="timeline__content-title">1959</h2>
+          <p class="timeline__content-desc">Se crea el primer ordenador comercial interactivo (en comparación con los
+            grandes
+            ordenadores tradicionales de cálculo). Fue también el primer ordenador "divertido" de utilizar, a causa
+            de su interactividad.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="NLS, o la  Sistema oN-Line">
+        <div class="timeline__content"><img class="timeline__img" src="image/60s.jpeg" />
+          <h2 class="timeline__content-title">1960</h2>
+          <p class="timeline__content-desc">Fue un revolucionario sistema de colaboración informática Diseñada por
+            Douglas
+            Engelbart e implementado por investigadores ARC en el SRI. El equipo desarrolló un sistema en el que los
+            usuarios fuera de línea, es decir, cualquiera que no esté sentado en la única terminal disponible
+            podrían editar sus documentos introduciendo una serie de comandos en cinta de papel con un Flexowriter.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PRIMER PROTOTIPO DE MOUSE">
+        <div class="timeline__content"><img class="timeline__img" src="image/1960.png" />
+          <h2 class="timeline__content-title">1960</h2>
+          <p class="timeline__content-desc">El investigador Douglas Engelbart quería encontrar una manera fácil de
+            controlar
+            las cosas que ocurrían en la pantalla, así como facilitar muchas de las tareas que una persona querría
+            hacer y que no eran posibles con un teclado. Con su aparición, logró también dar el paso definitivo a la
+            aparición de los primeros entornos o interfaces gráficas de usuario.
+          </p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="SPACEWAR PRIMER VIDEOJUEGO GRÁFICO">
+        <div class="timeline__content"><img class="timeline__img" src="image/1962.jpg" />
+          <h2 class="timeline__content-title">1962</h2>
+          <p class="timeline__content-desc">Steve Russell escribió el código de Spacewar en una computadora PDP-1 en el
+            MIT.
+            El código llegó a numerosas computadoras en otras universidades constituyendo el primer videojuego para
+            ordenador de la historia este juego incluía el primer joystick.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MANIPILACI&Oacute;N DE OBJETOS GR&Aacute;FICOS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1963.jpg" />
+          <h2 class="timeline__content-title">1963</h2>
+          <p class="timeline__content-desc">El sistema
+            SketchPad fue el primer sistema gráfico interactivo, soportaba la manipulación de objetos
+            gráficos mediante un lápiz óptico.
+          </p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="RATON (NLS)">
+        <div class="timeline__content"><img class="timeline__img" src="image/1965_RATON.jpg" />
+          <h2 class="timeline__content-title">1965</h2>
+          <p class="timeline__content-desc">El primer ratón se desarrolló en los laboratorios SRI, como parte del
+            proyecto
+            NLS (financiado por ARPA, NASA y Rome ADC), como sustituto económico de los lápices ópticos que habían
+            sido usados desde 1954.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="EDICI&Oacute;N Y PROCESAMIENTO DE TEXTO (TECO)">
+        <div class="timeline__content"><img class="timeline__img" src="image/1965_TECO.gif" />
+          <h2 class="timeline__content-title">1965</h2>
+          <p class="timeline__content-desc">TECO fue uno de los primeros editores de texto de pantalla.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="PROGRAMAS DE DIBUJO Y PINTURA (NLS)">
+        <div class="timeline__content"><img class="timeline__img" src="image/1965_programas_de_dibujo.jfif" />
+          <h2 class="timeline__content-title">1965</h2>
+          <p class="timeline__content-desc">Uno de los periféricos imprescindibles en el mundo de las aplicaciones de
+            dibujo es el ratón. El uso de este dispositivo de entrada fue demostrado en 1965 por NLS.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MANIPULACI&Oacute;N DIRECTA DE OBJETOS GRAFICOS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1966.jfif" />
+          <h2 class="timeline__content-title">1967</h2>
+          <p class="timeline__content-desc">Reaction Handler este sistema fue creado en el Imperial College de Londres y
+            permitía la manipulación directa de gráficos.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="GROPE, REPRESENTACIONES GR&Aacute;FICAS DE MOL&EacuteCULAS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1967.png" />
+          <h2 class="timeline__content-title">1967</h2>
+          <p class="timeline__content-desc">Haptic Display Grope III muestra representaciones gráficas de moléculas en
+            diferentes dimensiones.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="LAS VENTANAS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1968_ventana+.png" />
+          <h2 class="timeline__content-title">1968</h2>
+          <p class="timeline__content-desc">ENGELBART. El uso de múltiples ventanas fue demostrado por ENGELBART, dentro
+            del proyecto NLS.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="RATÓN PARA SISTEMAS DE ANIMACI&Oacute;N">
+        <div class="timeline__content"><img class="timeline__img" src="image/1968_raton.jpg" />
+          <h2 class="timeline__content-title">1968</h2>
+          <p class="timeline__content-desc">KEN PULFER & GRANT BECHTHOLD, se construyó un ratón que se utilizó en un
+            sistema de animación de largometrajes para dibujar los fotogramas de una película.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="AMBIT/G">
+        <div class="timeline__content"><img class="timeline__img" src="image/1968 _AMBIT_G.jfif" />
+          <h2 class="timeline__content-title">1968</h2>
+          <p class="timeline__content-desc">Este sistema incluyó representaciones de iconos, reconocimiento de gestos,
+            menús dinámicos con la ayuda de dispositivos apuntadores y selección de iconos apuntándolos.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="MIT’s Lincoln Labs">
+        <div class="timeline__content"><img class="timeline__img" src="image/1968_MIT’s_Lincoln_Labs.jpg" />
+          <h2 class="timeline__content-title">1968</h2>
+          <p class="timeline__content-desc">Este sistema incluyó representaciones de iconos, reconocimiento de gestos,
+            menús dinámicos con la ayuda de dispositivos apuntadores y selección de iconos apuntándolos.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="VENTANAS TRASLAPADAS">
+        <div class="timeline__content"><img class="timeline__img" src="image/1969.webp" />
+          <h2 class="timeline__content-title">1969</h2>
+          <p class="timeline__content-desc">ALAN KAY propuso la idea de ventanas traslapadas.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="DARPA">
+        <div class="timeline__content"><img class="timeline__img" src="image/1970_DARPA.png" />
+          <h2 class="timeline__content-title">1970</h2>
+          <p class="timeline__content-desc">El departamento de la defensa de los Estados Unidos fundaron un programa de
+            reconocimiento de voz llamado DARPA Comprensión del habla. Este ayudó a crear el Harpy System.</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-text="EL RATÓN (XEROX PARC)">
+        <div class="timeline__content"><img class="timeline__img" src="image/1970_xeron_parc.jpg" />
+          <h2 class="timeline__content-title">1970</h2>
+          <p class="timeline__content-desc">Xerox Parc popularizó el ratón como un dispositivo de entrada práctico.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+
+    (function ($) {
+      $.fn.timeline = function () {
+        var selectors = {
+          id: $(this),
+          item: $(this).find(".timeline-item"),
+          activeClass: "timeline-item--active",
+          img: ".timeline__img"
+        };
+        selectors.item.eq(0).addClass(selectors.activeClass);
+        selectors.id.css(
+          "background-image",
+          "url(" +
+          selectors.item
+            .first()
+            .find(selectors.img)
+            .attr("src") +
+          ")"
+        );
+        var itemLength = selectors.item.length;
+        $(window).scroll(function () {
+          var max, min;
+          var pos = $(this).scrollTop();
+          selectors.item.each(function (i) {
+            min = $(this).offset().top;
+            max = $(this).height() + $(this).offset().top;
+            var that = $(this);
+            if (i == itemLength - 2 && pos > min + $(this).height() / 2) {
+              selectors.item.removeClass(selectors.activeClass);
+              selectors.id.css(
+                "background-image",
+                "url(" +
+                selectors.item
+                  .last()
+                  .find(selectors.img)
+                  .attr("src") +
+                ")"
+              );
+              selectors.item.last().addClass(selectors.activeClass);
+            } else if (pos <= max - 40 && pos >= min) {
+              selectors.id.css(
+                "background-image",
+                "url(" +
+                $(this)
+                  .find(selectors.img)
+                  .attr("src") +
+                ")"
+              );
+              selectors.item.removeClass(selectors.activeClass);
+              $(this).addClass(selectors.activeClass);
+            }
+          });
+        });
+      };
+    })(jQuery);
+
+    $("#timeline-1").timeline();
+
+  </script>
+</body>
+
+</html>
